@@ -1,0 +1,28 @@
+﻿
+namespace Books.Validation
+{
+    public class AllowedExtentionAttribute:ValidationAttribute
+    {
+        private readonly string _allowedExtentions;
+        public AllowedExtentionAttribute(string allowExtention)
+        {
+            _allowedExtentions = allowExtention;
+        }
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        {
+            var file = value as IFormFile; 
+            if (file != null)
+            {
+                var extention = Path.GetExtension(file.FileName);
+                var isAllowed=_allowedExtentions.Split(',').Contains(extention,StringComparer.OrdinalIgnoreCase);
+                if (!isAllowed)
+                {
+                    return new ValidationResult($"Only {_allowedExtentions} are allowed ");
+                }
+
+            }
+            return ValidationResult.Success;
+            
+        }
+    }
+}

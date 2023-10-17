@@ -1,0 +1,55 @@
+﻿@model CreateBookViewModel
+@{
+    ViewData["title"] = "Create new Book";
+}
+<h5 class="mt-4">Create New Book</h5>
+<form asp-controller="Books" enctype="multipart/form-data" >
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Title" class="form-label mt-4"></label>
+                <input asp-for="Title" placeholder="Enter Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="form-label mt-4"></label>
+                <input asp-for="Author" placeholder="Enter Athor" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="form-label mt-4"></label>
+                <textarea asp-for="Description" placeholder="Enter Description" class="form-control" ></textarea>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookTypeId" class="form-label mt-4">Type</label>
+                <select class="form-select" asp-for="BookTypeId" asp-items="Model.BooksTypes">
+                <option value="">Select Type..</option>   
+                
+                </select>
+                <span asp-validation-for="BookTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cover" class="form-label mt-4"></label>
+                <input type="file" asp-for="Cover"  class="form-control" 
+                data-rule-extention="@AttribuesImage.AllowedExtention.Replace(".",string.Empty)"
+                data-msg-extention="Not Allowed Extentions"
+                />
+                <small class="form-text text-muted"> Only @AttribuesImage.AllowedExtention , @AttribuesImage.MaxFileSizeinMg</small>
+                <span asp-validation-for="Cover" class="text-danger"></span>
+            </div>
+            <button class="mt-4 btn btn-outline-secondary" type="submit">Create</button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center pt-4"> 
+            <img class="Cover-Preview d-none"  alt="Cover" style="height:500px; border-radius:8px; width:400px" />
+        </div>
+    </div>
+</form>
+
+                @section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/coverdisplay.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+
+                }

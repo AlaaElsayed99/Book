@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-dismissible alert-danger mt-5">
+        <h4>Oh snap!</h4> <p>NO Books</p>
+    </div>
+}
+else
+{
+    <div class="row mt-5" >
+        @foreach (var book in Model)
+        {
+            <a class="card mb-3 text-decoration-none" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                <h3 class="card-header d-flex justify-content-end" style="background-color: transparent; color: white;">
+                    (@book.Type.Type)  @book.Title
+
+
+
+                </h3>
+                
+                <img src="@($"{AttribuesImage.IamgePath}/{book.Cover}")" style="max-height:500px;" alt="Book cover" />
+                <div class="card-body d-flex justify-content-end">
+                    <p class="card-text" style="color: white;">@book.Description</p>
+                </div>
+
+               
+            </a>
+        }
+    </div>
+
+}
